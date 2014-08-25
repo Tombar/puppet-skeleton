@@ -5,8 +5,8 @@
 # and change the IPs if you use this skeleton as a base for mulitple puppet repos
 nodes = {
   'node0' => {:ip => '172.16.10.10', :memory => 512},
-  'node1' => {:ip => '172.16.10.11'},
-  'node2' => {:ip => '172.16.10.12'},
+#  'node1' => {:ip => '172.16.10.11'},
+#  'node2' => {:ip => '172.16.10.12'},
 }
 node_defaults = {
   :domain => 'internal',
@@ -14,7 +14,7 @@ node_defaults = {
 }
 
 Vagrant.configure("2") do |config|
-  config.vm.box     = "debian-70rc1-x64-vbox4210"
+  config.vm.box     = "Debian-7.6.0-amd64-netboot-nocm"
   # config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-1204-x64.box"
 
   config.vm.synced_folder '.', '/opt/puppet'
