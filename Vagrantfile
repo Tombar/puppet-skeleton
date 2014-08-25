@@ -15,7 +15,7 @@ node_defaults = {
 
 Vagrant.configure("2") do |config|
   config.vm.box     = "Debian-7.6.0-amd64-netboot-nocm"
-  # config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-1204-x64.box"
+  config.vm.box_url = "http://repo.crvt.net/vagrant-boxes/linux/Debian-7.6.0-amd64-netboot-nocm.box"
 
   config.vm.synced_folder '.', '/opt/puppet'
 
