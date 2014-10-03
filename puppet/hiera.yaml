@@ -1,6 +1,6 @@
 :hierarchy:
-  - "node.%{::clientcert}"
-  - "env.%{::environment}"
+  - "%{::clientcert}"
+  - "%{::environment}"
   - common
 :backends:
   - yaml

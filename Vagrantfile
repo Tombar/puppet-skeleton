@@ -1,29 +1,24 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# To save yourself from clashes it is recommended that you rename the nodes
-# and change the IPs if you use this skeleton as a base for mulitple puppet repos
 nodes = {
   'node0' => {:ip => '172.16.10.10', :memory => 512},
 #  'node1' => {:ip => '172.16.10.11'},
 #  'node2' => {:ip => '172.16.10.12'},
 }
 node_defaults = {
-  :domain => 'internal',
+  :domain => 'dev',
   :memory => 384,
 }
 
 Vagrant.configure("2") do |config|
-  config.vm.box     = "Debian-7.6.0-amd64-netboot-nocm"
-  config.vm.box_url = "http://repo.crvt.net/vagrant-boxes/linux/Debian-7.6.0-amd64-netboot-nocm.box"
+  config.vm.box     = "Debian-7.6.0-amd64-netboot"
+  config.vm.box_url = "http://repo.crvt.net/vagrant-boxes/linux/Debian-7.6.0-amd64-netboot.box"
 
-  config.vm.synced_folder '.', '/opt/puppet'
+  config.vm.synced_folder 'puppet', '/opt/puppet'
 
   config.vm.provision :shell,
-    :inline => 'exec /opt/puppet/tools/bootstrap'
-  config.vm.provision :shell,
-    :inline => 'exec /opt/puppet/tools/puppet-apply $@',
-    :args   => '--verbose --summarize --environment development'
+    :inline => 'exec /usr/local/bin/run-librarian'
 
   nodes.each do |node_name, node_opts|
     config.vm.define node_name do |node|
@@ -47,6 +42,11 @@ Vagrant.configure("2") do |config|
         modifyvm_args << "--natdnshostresolver1" << "on"
         vb.customize(modifyvm_args)
       end
+
+      config.vm.provision :shell,
+        :inline => "exec /usr/local/bin/run-puppet #{node_name}.pp $@",
+        :args   => '--verbose --summarize --environment development'
+
     end
   end
 end
