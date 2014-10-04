@@ -44,8 +44,8 @@ Vagrant.configure("2") do |config|
       end
 
       config.vm.provision :shell,
-        :inline => "exec /usr/local/bin/run-puppet #{node_name}.pp $@",
-        :args   => '--verbose --summarize --environment development'
+        :inline => "exec /usr/local/bin/run-puppet $@",
+        :args   => "--verbose --summarize --environment development"
 
     end
   end
